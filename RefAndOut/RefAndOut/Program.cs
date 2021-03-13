@@ -29,7 +29,8 @@ namespace RefAndOut
                         break;
                     case "Del":
                         int FIOJ = int.Parse(Console.ReadLine());
-                        Del(FIOJ, ref FIO, ref job);
+                        FIOJ -= 1;
+                        Del(ref width ,FIOJ, ref FIO, ref job);
                         break;
                     case "Exit":
                         Exit(out exit);
@@ -43,8 +44,43 @@ namespace RefAndOut
                 }
             }
         }
-        public static void Del(int FIOJ, ref string[] FIO, ref string[] job)
+        public static void Del(ref int width,int FIOJ, ref string[] FIO, ref string[] job)
         {
+            for (int i = 0; i < FIO.Length - 1; i++)
+            {
+                if (i == FIOJ)
+                {
+                    FIO[i] = null;
+                    job[i] = null;
+                }
+                if (i > FIOJ)
+                {
+                    string tempName2 = FIO[i];
+                    string tempJob2 = job[i];
+
+                    FIO[i - 1] = tempName2;
+                    job[i - 1] = tempJob2;
+                }
+            }
+
+            string[] tempName = new string[width];
+            string[] tempJob = new string[width];
+
+            for (int i = 0; i < FIO.Length; i++)
+            {
+                tempName[i] = FIO[i];
+                tempJob[i] = job[i];
+            }
+
+            width--;
+            FIO = new string[width];
+            job = new string[width];
+
+            for (int i = 0; i < FIO.Length; i++)
+            {
+                FIO[i] = tempName[i];
+                job[i] = tempJob[i];
+            }
             FIO[FIOJ - 1] = null;
             job[FIOJ - 1] = null;
         }
